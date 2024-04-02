@@ -1,37 +1,50 @@
 class SoSHashTable:
-    __initial_value = (-1, 'start')
+    _initial_value = (-1, 'start')
 
     def __init__(self, capacity):
-        self.__capacity = capacity
-        self.__contains = 0
-        self.table = [self.__initial_value] * self.__capacity
+        self._capacity = capacity
+        self._contains = 0
+        self.table = [self._initial_value] * self._capacity
+        self._i = -1
 
     def insert(self, key, item):
-        if not (self.__contains < self.__capacity):
+        if not (self._contains < self._capacity):
             print('Table is full')
             return False
-        bucket_index = self.__get_bucket_index(key)
+        bucket_index = self._get_bucket_index(key)
         while self.table[bucket_index][0] != -1:
-            self.__get_next_bucket_index(bucket_index)
+            bucket_index = self._get_next_bucket_index(bucket_index)
         self.table[bucket_index] = (key, item)
-        self.__contains += 1
+        self._contains += 1
         return True
 
     def get(self, key):
-        if self.__contains == 0:
+        if self._contains == 0:
             print('Table is empty')
             return False
-        bucket_index = self.__get_bucket_index(key)
+        bucket_index = self._get_bucket_index(key)
         while self.table[bucket_index][0] != key:
-            self.__get_next_bucket_index(bucket_index)
+            bucket_index = self._get_next_bucket_index(bucket_index)
         return self.table[bucket_index][1]
 
-    def __get_bucket_index(self, key):
-        return hash(key) % self.__capacity
+    def get_capacity(self):
+        return self._capacity
 
-    def __get_next_bucket_index(self, bucket_index):
-        if bucket_index == self.__capacity - 1:
+    def _get_bucket_index(self, key):
+        return int.from_bytes(key.encode()) % self._capacity
+
+    def _get_next_bucket_index(self, bucket_index):
+        if bucket_index == self._capacity - 1:
             bucket_index = 0
         else:
             bucket_index += 1
         return bucket_index
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self._i < self._capacity -1:
+            self._i += 1
+            return self.table[self._i][1]
+        raise StopIteration

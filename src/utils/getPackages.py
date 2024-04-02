@@ -1,4 +1,5 @@
 import csv
 
-def getPackages():
+
+def get_packages():
     packages = []
