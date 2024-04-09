@@ -8,4 +8,11 @@ class SoSLocation:
     def get_id(self):
         return self._id
 
+    def get_location(self):
+        return self._location
 
+    def get_address(self):
+        return self._address
+
+    def get_zip(self):
+        return self._zip

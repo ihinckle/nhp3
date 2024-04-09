@@ -19,9 +19,6 @@ class SoSHashTable:
         return True
 
     def get(self, key):
-        if self._contains == 0:
-            print('Table is empty')
-            return False
         bucket_index = self._get_bucket_index(key)
         while self.table[bucket_index][0] != key:
             bucket_index = self._get_next_bucket_index(bucket_index)

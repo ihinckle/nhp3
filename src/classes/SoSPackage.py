@@ -1,8 +1,10 @@
 from enum import Enum
+import re
 
 
 class SoSPackage:
     DELIVERY_STATUS = Enum('DeliveryStatus', ['AT_HUB', 'EN_ROUTE', 'DELIVERED'])
+    SPECIAL_NOTE_TYPE = Enum('SpecialNoteType', ['TRUCK_LIMITATION'])
 
     def __init__(self, package):
         self._delivery_status = self.DELIVERY_STATUS.AT_HUB.value
@@ -13,7 +15,7 @@ class SoSPackage:
         self._zip_code = package[4]
         self._deadline = package[5]
         self._weight = package[6]
-        self._special_note = package[7]
+        self._special_note = self._parse_special_note(package)
 
     def get_id(self) -> str:
         return self._id
@@ -44,3 +46,9 @@ class SoSPackage:
 
     def set_delivery_status(self, delivery_status):
         self._delivery_status = delivery_status
+
+    def _parse_special_note(self, package):
+        special_note = package[7]
+        if matched := re.compile('\D*truck.*(\d)').match(special_note):
+            special_note = (self.SPECIAL_NOTE_TYPE.TRUCK_LIMITATION.value, matched.group(1))
+        return special_note
