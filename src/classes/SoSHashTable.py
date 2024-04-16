@@ -1,9 +1,9 @@
 class SoSHashTable:
     _initial_value = (-1, 'start')
 
-    def __init__(self, capacity):
-        self._capacity = capacity
-        self._contains = 0
+    def __init__(self, capacity: int):
+        self._capacity: int = capacity
+        self._contains: int = 0
         self.table = [self._initial_value] * self._capacity
         self._i = -1
 
@@ -41,7 +41,7 @@ class SoSHashTable:
         return self
 
     def __next__(self):
-        if self._i < self._capacity -1:
+        if self._i < self._capacity - 1:
             self._i += 1
-            return self.table[self._i][1]
+            return self.table[self._i]
         raise StopIteration
