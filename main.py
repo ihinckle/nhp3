@@ -50,10 +50,10 @@ def main():
                 truck = truck_3
         package: SoSPackage = packages.get(item[0])
         truck.load(package)
-        load_more(truck, package.get_destination_id(), packages_sorted.get(package.get_destination_id()))
+        load_more(truck, packages_sorted.get(package.get_destination_id()))
 
 
-def load_more(truck: SoSTruck, destination: str, packages: list[str]):
+def load_more(truck: SoSTruck, packages: list):
     if packages.len() < 1:
         return
     for packageId in packages:
