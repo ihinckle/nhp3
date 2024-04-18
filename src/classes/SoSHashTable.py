@@ -2,12 +2,12 @@ class SoSHashTable:
     _initial_value = (-1, 'start')
 
     def __init__(self, capacity: int):
-        self._capacity: int = capacity
-        self._contains: int = 0
+        self._capacity = capacity
+        self._contains = 0
         self.table = [self._initial_value] * self._capacity
         self._i = -1
 
-    def insert(self, key, item):
+    def insert(self, key, item) -> bool:
         if not (self._contains < self._capacity):
             print('Table is full')
             return False
@@ -21,16 +21,18 @@ class SoSHashTable:
     def get(self, key):
         bucket_index = self._get_bucket_index(key)
         while self.table[bucket_index][0] != key:
+            if self.table[bucket_index][0] == -1:
+                print('Item not found')
             bucket_index = self._get_next_bucket_index(bucket_index)
         return self.table[bucket_index][1]
 
     def get_capacity(self):
         return self._capacity
 
-    def _get_bucket_index(self, key):
+    def _get_bucket_index(self, key) -> int:
         return int.from_bytes(key.encode()) % self._capacity
 
-    def _get_next_bucket_index(self, bucket_index):
+    def _get_next_bucket_index(self, bucket_index: int) -> int:
         if bucket_index == self._capacity - 1:
             bucket_index = 0
         else:

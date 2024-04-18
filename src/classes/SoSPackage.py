@@ -57,7 +57,7 @@ class SoSPackage:
         elif matched := re.compile('Delayed.*?(\d+:\d+ [ap]m)').match(special_note):
             special_note = (self.SPECIAL_NOTE_TYPE.DELAYED.value, matched.group(1))
         elif re.compile('Wrong.*').match(special_note):
-            special_note = (self.SPECIAL_NOTE_TYPE.WRONG_ADDRESS.value, -1)
+            special_note = (self.SPECIAL_NOTE_TYPE.WRONG_ADDRESS.value,)
         elif matched := re.compile('(Must\D*)(?(1)((?:\d+, )*\d*))').match(special_note):
             special_note = (self.SPECIAL_NOTE_TYPE.DELIVERED_WITH.value, matched.group(2))
         return special_note

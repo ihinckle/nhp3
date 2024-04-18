@@ -8,8 +8,7 @@ class LocationsUtils:
     @staticmethod
     def set_up_locations_table():
         with open('resources/locations.csv') as locations_csv:
-            locations_reader = csv.reader(locations_csv)
-            locations_quantity = sum(1 for row in locations_reader) - 1
+            locations_quantity = len(locations_csv.readlines()) - 1
             locations = SoSHashTable(locations_quantity)
             packages_sorted = SoSHashTable(locations_quantity)
             locations_csv.seek(0)
