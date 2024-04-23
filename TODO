@@ -1,7 +1,3 @@
+figure out why packages are being loaded twice
 import distances
-sort packages
-    special conditions
-        with package(s)
-        before time
-        waiting on address fix
-        delayed
+load delivered with

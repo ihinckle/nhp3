@@ -5,6 +5,7 @@ import re
 class SoSPackage:
     DELIVERY_STATUS = Enum('DeliveryStatus', ['AT_HUB', 'EN_ROUTE', 'DELIVERED'])
     SPECIAL_NOTE_TYPE = Enum('SpecialNoteType', ['TRUCK_LIMITATION', 'DELAYED', 'WRONG_ADDRESS', 'DELIVERED_WITH'])
+    NO_DEADLINE = 'EOD'
 
     def __init__(self, package):
         self._delivery_status: int = self.DELIVERY_STATUS.AT_HUB.value
@@ -15,7 +16,9 @@ class SoSPackage:
         self._zip_code: str = package[4]
         self._deadline: str = package[5]
         self._weight: str = package[6]
-        self._special_note = self._parse_special_note(package)
+        self._special_note: tuple = self._parse_special_note(package)
+        self._loaded_time = -1
+        self._delivered_time = -1
 
     def get_id(self) -> str:
         return self._id
@@ -49,6 +52,18 @@ class SoSPackage:
 
     def get_destination_id(self) -> str:
         return self.get_address()+self.get_zip()
+
+    def get_loaded_time(self):
+        return self._loaded_time
+
+    def set_loaded_time(self, time):
+        self._loaded_time = time
+
+    def get_delivered_time(self):
+        return self._delivered_time
+
+    def set_delivered_time(self, time):
+        self._delivered_time = time
 
     def _parse_special_note(self, package):
         special_note = package[7]

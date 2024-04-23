@@ -1,21 +1,20 @@
 import csv
 
 from src.classes.SoSHashTable import SoSHashTable
+from src.classes.SoSLocations import SoSLocations
 from src.classes.SoSPackage import SoSPackage
 
 
 class SoSPackages:
     packages: SoSHashTable
     truck_restricted: list[tuple] = []
-    delayed: list[tuple] = []
-    wrong_address: list[str] = []
+    before_specified_time: list[tuple] = []
     delivered_with: list[tuple] = []
-    packages_sorted: SoSHashTable
+    delayed: list[tuple] = []
+    wrong_address: list[tuple] = []
 
     @staticmethod
-    def get_packages(packages_sorted):
-        SoSPackages.packages_sorted = packages_sorted
-
+    def initialize():
         with open('resources/packages.csv') as packages_csv:
             package_quantity = len(packages_csv.readlines()) - 1
             SoSPackages.packages = SoSHashTable(package_quantity)
@@ -26,14 +25,16 @@ class SoSPackages:
                     continue
                 package = SoSPackage(row)
                 SoSPackages.packages.insert(package.get_id(), package)
+                if package.get_deadline() != SoSPackage.NO_DEADLINE:
+                    SoSPackages.before_specified_time.append((package.get_id(), package.get_deadline()))
                 if package.get_special_note():
                     if package.get_special_note()[0] == SoSPackage.SPECIAL_NOTE_TYPE.TRUCK_LIMITATION.value:
                         SoSPackages.truck_restricted.append((package.get_id(), package.get_special_note()[1]))
                     if package.get_special_note()[0] == SoSPackage.SPECIAL_NOTE_TYPE.DELAYED.value:
                         SoSPackages.delayed.append((package.get_id(), package.get_special_note()[1]))
                     if package.get_special_note()[0] == SoSPackage.SPECIAL_NOTE_TYPE.WRONG_ADDRESS.value:
-                        SoSPackages.wrong_address.append(package.get_id())
+                        SoSPackages.wrong_address.append((package.get_id(), ))
                     if package.get_special_note()[0] == SoSPackage.SPECIAL_NOTE_TYPE.DELIVERED_WITH.value:
                         SoSPackages.delivered_with.append((package.get_id(), package.get_special_note()[1]))
                 else:
-                    SoSPackages.packages_sorted.get(package.get_address() + package.get_zip()).append(package.get_id())
+                    SoSLocations.packages_to_locations.get(package.get_address() + package.get_zip()).append(package.get_id())
