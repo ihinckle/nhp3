@@ -20,5 +20,9 @@ class SoSLocations:
                 if row[0] == 'ID':
                     continue
                 location = SoSLocation(row)
-                SoSLocations.locations.insert(location.get_address() + location.get_zip(), location)
-                SoSLocations.packages_to_locations.insert(location.get_address() + location.get_zip(), [])
+                SoSLocations.locations.insert(SoSLocations.create_destination_id(location.get_address() + location.get_zip()), location)
+                SoSLocations.packages_to_locations.insert(SoSLocations.create_destination_id(location.get_address() + location.get_zip()), [])
+
+    @staticmethod
+    def create_destination_id(string: str) -> str:
+        return string.replace(' ', '')

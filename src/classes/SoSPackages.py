@@ -37,4 +37,4 @@ class SoSPackages:
                     if package.get_special_note()[0] == SoSPackage.SPECIAL_NOTE_TYPE.DELIVERED_WITH.value:
                         SoSPackages.delivered_with.append((package.get_id(), package.get_special_note()[1]))
                 else:
-                    SoSLocations.packages_to_locations.get(package.get_address() + package.get_zip()).append(package.get_id())
+                    SoSLocations.packages_to_locations.get(package.get_destination_id()).append(package.get_id())

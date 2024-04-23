@@ -1,6 +1,8 @@
 from enum import Enum
 import re
 
+from src.classes.SoSLocations import SoSLocations
+
 
 class SoSPackage:
     DELIVERY_STATUS = Enum('DeliveryStatus', ['AT_HUB', 'EN_ROUTE', 'DELIVERED'])
@@ -51,7 +53,7 @@ class SoSPackage:
         self._delivery_status = delivery_status
 
     def get_destination_id(self) -> str:
-        return self.get_address()+self.get_zip()
+        return SoSLocations.create_destination_id(self.get_address() + self.get_zip())
 
     def get_loaded_time(self):
         return self._loaded_time
