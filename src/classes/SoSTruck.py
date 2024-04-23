@@ -19,6 +19,8 @@ class SoSTruck:
         if len(self._cargo) == 16:
             self._is_full = True
             return
+        if package.get_delivery_status() != SoSPackage.DELIVERY_STATUS.AT_HUB.value:
+            return
         self._cargo.append(package.get_id())
         if package.get_destination_id() not in self._destinations:
             self._destinations.append(package.get_destination_id())

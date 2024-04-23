@@ -1,3 +1,2 @@
-figure out why packages are being loaded twice
 import distances
 load delivered with
