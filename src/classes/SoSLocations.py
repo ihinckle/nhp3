@@ -7,6 +7,7 @@ from src.classes.SoSLocation import SoSLocation
 class SoSLocations:
     locations: SoSHashTable
     packages_to_locations: SoSHashTable
+    location_distances: list[list] = []
 
     @staticmethod
     def initialize():
@@ -22,6 +23,11 @@ class SoSLocations:
                 location = SoSLocation(row)
                 SoSLocations.locations.insert(SoSLocations.create_destination_id(location.get_address() + location.get_zip()), location)
                 SoSLocations.packages_to_locations.insert(SoSLocations.create_destination_id(location.get_address() + location.get_zip()), [])
+        with open('resources/location_distances.csv') as distances_csv:
+            distances_reader = csv.reader(distances_csv)
+            for row in distances_reader:
+                SoSLocations.location_distances.append(row)
+
 
     @staticmethod
     def create_destination_id(string: str) -> str:
