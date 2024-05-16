@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from src.classes.SoSPackage import SoSPackage
 from src.classes.SoSPackages import SoSPackages
 
@@ -8,6 +10,7 @@ class SoSTruck:
         self._cargo = []
         self._destinations = []
         self._truck_number = str(number)
+        self._clock = datetime.strptime('08:00', '%H:%M:%S')
 
     def get_truck_number(self):
         return self._truck_number
