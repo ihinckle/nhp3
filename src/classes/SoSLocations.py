@@ -32,3 +32,11 @@ class SoSLocations:
     @staticmethod
     def create_destination_id(string: str) -> str:
         return string.replace(' ', '')
+
+    @staticmethod
+    def lookup_distance(current_location_id, destination_id):
+        lookup_check = SoSLocations.location_distances[current_location_id][destination_id]
+        if lookup_check != '':
+            return lookup_check
+        else:
+            return SoSLocations.location_distances[destination_id][current_location_id]
