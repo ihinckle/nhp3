@@ -21,8 +21,8 @@ class SoSLocations:
                 if row[0] == 'ID':
                     continue
                 location = SoSLocation(row)
-                SoSLocations.locations.insert(SoSLocations.create_destination_id(location.get_address() + location.get_zip()), location)
-                SoSLocations.packages_to_locations.insert(SoSLocations.create_destination_id(location.get_address() + location.get_zip()), [])
+                SoSLocations.locations.insert(SoSLocations.create_destination_lookup_id(location.get_address() + location.get_zip()), location)
+                SoSLocations.packages_to_locations.insert(SoSLocations.create_destination_lookup_id(location.get_address() + location.get_zip()), [])
         with open('resources/location_distances.csv') as distances_csv:
             distances_reader = csv.reader(distances_csv)
             for row in distances_reader:
@@ -30,11 +30,13 @@ class SoSLocations:
 
 
     @staticmethod
-    def create_destination_id(string: str) -> str:
+    def create_destination_lookup_id(string: str) -> str:
         return string.replace(' ', '')
 
     @staticmethod
     def lookup_distance(current_location_id, destination_id):
+        current_location_id = int(current_location_id)
+        destination_id = int(destination_id)
         lookup_check = SoSLocations.location_distances[current_location_id][destination_id]
         if lookup_check != '':
             return lookup_check

@@ -1,1 +1,7 @@
 deliver packages
+- track package transition times
+-- time when loaded
+-- time when delivered
+- track truck clock
+truck 2
+- wait for delayed packages

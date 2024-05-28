@@ -4,7 +4,7 @@ class SoSHashTable:
     def __init__(self, capacity: int):
         self._capacity = capacity
         self._contains = 0
-        self.table = [self._initial_value] * self._capacity
+        self._table = [self._initial_value] * self._capacity
         self._i = -1
 
     def insert(self, key, item) -> bool:
@@ -12,19 +12,19 @@ class SoSHashTable:
             print('Table is full')
             return False
         bucket_index = self._get_bucket_index(key)
-        while self.table[bucket_index][0] != -1:
+        while self._table[bucket_index][0] != -1:
             bucket_index = self._get_next_bucket_index(bucket_index)
-        self.table[bucket_index] = (key, item)
+        self._table[bucket_index] = (key, item)
         self._contains += 1
         return True
 
     def get(self, key):
         bucket_index = self._get_bucket_index(key)
-        while self.table[bucket_index][0] != key:
-            if self.table[bucket_index][0] == -1:
+        while self._table[bucket_index][0] != key:
+            if self._table[bucket_index][0] == -1:
                 print('Item not found')
             bucket_index = self._get_next_bucket_index(bucket_index)
-        return self.table[bucket_index][1]
+        return self._table[bucket_index][1]
 
     def get_capacity(self):
         return self._capacity
@@ -45,5 +45,5 @@ class SoSHashTable:
     def __next__(self):
         if self._i < self._capacity - 1:
             self._i += 1
-            return self.table[self._i]
+            return self._table[self._i]
         raise StopIteration

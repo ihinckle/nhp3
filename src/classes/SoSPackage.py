@@ -52,8 +52,8 @@ class SoSPackage:
     def set_delivery_status(self, delivery_status):
         self._delivery_status = delivery_status
 
-    def get_destination_id(self) -> str:
-        return SoSLocations.create_destination_id(self.get_address() + self.get_zip())
+    def get_destination_lookup_id(self) -> str:
+        return SoSLocations.create_destination_lookup_id(self.get_address() + self.get_zip())
 
     def get_loaded_time(self):
         return self._loaded_time
