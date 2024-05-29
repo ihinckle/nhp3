@@ -28,6 +28,9 @@ class SoSPackage:
     def get_address(self) -> str:
         return self._address
 
+    def set_address(self, address: str):
+        self._address = address
+
     def get_city(self) -> str:
         return self._city
 
@@ -36,6 +39,9 @@ class SoSPackage:
 
     def get_zip(self) -> str:
         return self._zip_code
+
+    def set_zip_code(self, zip_code: str):
+        self._zip_code = zip_code
 
     def get_deadline(self) -> str:
         return self._deadline

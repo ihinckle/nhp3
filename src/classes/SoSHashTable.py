@@ -39,11 +39,14 @@ class SoSHashTable:
             bucket_index += 1
         return bucket_index
 
+    def reset_iterator(self):
+        self._i = -1
+
     def __iter__(self):
         return self
 
     def __next__(self):
         if self._i < self._capacity - 1:
             self._i += 1
-            return self._table[self._i]
+            return self._table[self._i][1]
         raise StopIteration
