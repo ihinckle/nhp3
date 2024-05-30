@@ -55,6 +55,15 @@ class SoSPackage:
     def get_delivery_status(self):
         return self._delivery_status
 
+    def get_delivery_status_readable(self):
+        match self._delivery_status:
+            case SoSPackage.DELIVERY_STATUS.AT_HUB.value:
+                return 'At Hub'
+            case SoSPackage.DELIVERY_STATUS.EN_ROUTE.value:
+                return 'En Route'
+            case SoSPackage.DELIVERY_STATUS.DELIVERED.value:
+                return 'Delivered'
+
     def set_delivery_status(self, delivery_status):
         self._delivery_status = delivery_status
 

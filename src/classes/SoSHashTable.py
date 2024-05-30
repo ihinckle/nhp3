@@ -20,10 +20,14 @@ class SoSHashTable:
 
     def get(self, key):
         bucket_index = self._get_bucket_index(key)
+        starting_bucket_index = int(bucket_index)
         while self._table[bucket_index][0] != key:
             if self._table[bucket_index][0] == -1:
                 print('Item not found')
             bucket_index = self._get_next_bucket_index(bucket_index)
+            if bucket_index == starting_bucket_index:
+                print('Item not found')
+                return -1
         return self._table[bucket_index][1]
 
     def get_capacity(self):
