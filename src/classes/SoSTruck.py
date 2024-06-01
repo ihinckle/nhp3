@@ -155,7 +155,7 @@ class SoSTruck:
             return
         # Add the package to the cargo manifest.
         self._cargo.append(package.get_id())
-        # Add the destination id to the gps destinations. Each entry int he array will be unique.
+        # Add the destination id to the gps destinations. Each entry in the array will be unique.
         destination_id = SoSLocations.locations.get(package.get_destination_lookup_id()).get_id()
         if destination_id not in self._destinations:
             self._destinations.append(destination_id)
@@ -165,6 +165,8 @@ class SoSTruck:
         package.set_delivery_status(SoSPackage.DELIVERY_STATUS.EN_ROUTE.value)
         # Record the loaded time.
         package.set_loaded_time(self._clock)
+        # Record which truck delivered the package.
+        package.set_on_truck(self._truck_number)
         # Remove the package from its special pile
         SoSPackages.truck_restricted = list(filter(lambda x: x[0] != package.get_id(), SoSPackages.truck_restricted))
         SoSPackages.before_specified_time = list(filter(lambda x: x[0] != package.get_id(), SoSPackages.before_specified_time))

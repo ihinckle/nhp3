@@ -21,6 +21,7 @@ class SoSPackage:
         self._special_note: tuple = self._parse_special_note(package)
         self._loaded_time = -1
         self._delivered_time = -1
+        self._on_truck = -1
 
     def get_id(self) -> str:
         return self._id
@@ -82,6 +83,12 @@ class SoSPackage:
 
     def set_delivered_time(self, time):
         self._delivered_time = time
+
+    def get_on_truck(self):
+        return self._on_truck
+
+    def set_on_truck(self, truck_number):
+        self._on_truck = truck_number
 
     # Parses the special notes to simplify the algorithms later.
     # Some awesome regex was used to not only identify the type of special note but also extract the relevant data.
