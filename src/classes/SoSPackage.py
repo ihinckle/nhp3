@@ -55,6 +55,7 @@ class SoSPackage:
     def get_delivery_status(self):
         return self._delivery_status
 
+    # Create a human-readable value from the delivery status enum.
     def get_delivery_status_readable(self):
         match self._delivery_status:
             case SoSPackage.DELIVERY_STATUS.AT_HUB.value:
@@ -82,6 +83,8 @@ class SoSPackage:
     def set_delivered_time(self, time):
         self._delivered_time = time
 
+    # Parses the special notes to simplify the algorithms later.
+    # Some awesome regex was used to not only identify the type of special note but also extract the relevant data.
     def _parse_special_note(self, package):
         special_note = package[7]
         if matched := re.compile('\D*truck.*(\d)').match(special_note):
